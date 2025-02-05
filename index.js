@@ -1,4 +1,8 @@
-[
+const express = require("express");
+const app = express();
+const PORT = 3000;
+
+const phonebook = [
   {
     id: "1",
     name: "Arto Hellas",
@@ -20,3 +24,16 @@
     number: "39-23-6423122",
   },
 ];
+
+app.get("/", (request, response) => {
+  response.send("Phone Book List");
+});
+
+app.get("/api/phonebook", (request, response) => {
+  response.json(phonebook);
+  console.log("JSON list should be appearing in browser");
+});
+
+app.listen(PORT, () => {
+  console.log(`Now listening on Port ${PORT}`);
+});
