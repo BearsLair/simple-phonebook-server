@@ -28,21 +28,36 @@ const phonebook = [
 const phonebookLength = phonebook.length;
 const currentDateTime = Date();
 
+// Homepage
 app.get("/", (request, response) => {
   response.send("Phone Book List");
 });
 
+// Info page with number of phonebook entries and current date
 app.get("/info", (request, response) => {
-  //   response.header("Content-type", "text/html");
   response.send(
     `<div>Phonebook has info for ${phonebookLength} people.</br></br>${currentDateTime}</div>`
   );
   console.log("Info page should be appearing");
 });
 
+// JSON list of all phonebook entries
 app.get("/api/phonebook", (request, response) => {
   response.json(phonebook);
   console.log("JSON list should be appearing in browser");
+});
+
+// Single phonebook entry from JSON list
+app.get("/api/phonebook/:personId", (request, response) => {
+  console.log("personId parameter... ", request.params.personId);
+
+  const person = phonebook.find((person) => personId === person.id);
+
+  if (person) {
+    response.json(person);
+  } else {
+    response.status(404).json({ message: "Person not found" });
+  }
 });
 
 app.listen(PORT, () => {
