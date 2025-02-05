@@ -25,8 +25,19 @@ const phonebook = [
   },
 ];
 
+const phonebookLength = phonebook.length;
+const currentDateTime = Date();
+
 app.get("/", (request, response) => {
   response.send("Phone Book List");
+});
+
+app.get("/info", (request, response) => {
+  //   response.header("Content-type", "text/html");
+  response.send(
+    `<div>Phonebook has info for ${phonebookLength} people.</br></br>${currentDateTime}</div>`
+  );
+  console.log("Info page should be appearing");
 });
 
 app.get("/api/phonebook", (request, response) => {
