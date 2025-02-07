@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
-const phonebook = [
+// JSON list of persons in phonebook, present in code for learning purposes
+let phonebook = [
   {
     id: "1",
     name: "Arto Hellas",
@@ -38,7 +39,6 @@ app.get("/info", (request, response) => {
   response.send(
     `<div>Phonebook has info for ${phonebookLength} people.</br></br>${currentDateTime}</div>`
   );
-  console.log("Info page should be appearing");
 });
 
 // JSON list of all phonebook entries
@@ -49,8 +49,6 @@ app.get("/api/phonebook", (request, response) => {
 
 // Single phonebook entry from JSON list
 app.get("/api/phonebook/:personId", (request, response) => {
-  console.log("personId parameter... ", request.params.personId);
-
   const person = phonebook.find((person) => personId === person.id);
 
   if (person) {
@@ -58,6 +56,16 @@ app.get("/api/phonebook/:personId", (request, response) => {
   } else {
     response.status(404).json({ message: "Person not found" });
   }
+});
+
+// Delete single entry from JSON list
+app.delete("/api/phonebook/:personId", (request, response) => {
+  const deleteIndex = phonebook.findIndex(
+    (person) => request.params.personId === person.id
+  );
+  phonebook.splice(deleteIndex, 1);
+
+  response.send("Entry deleted");
 });
 
 app.listen(PORT, () => {
