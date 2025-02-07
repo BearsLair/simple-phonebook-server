@@ -91,8 +91,6 @@ app.post("/api/phonebook", (request, response) => {
     person.name === addRequest.name ? repeatedNameCount++ : null;
   });
 
-  console.log(repeatedNameCount);
-
   if (repeatedNameCount > 0) {
     return response.status(400).send("person's name already exists");
   }
