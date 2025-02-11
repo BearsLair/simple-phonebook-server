@@ -1,6 +1,14 @@
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
 app.use(express.json());
+
+morgan.token("content", function getContent(req) {
+  return JSON.stringify(req.body);
+});
+
+app.use(morgan(":method :url :status :total-time[0] :content"));
+
 const PORT = 3000;
 
 // JSON list of persons in phonebook, present in code for learning purposes
